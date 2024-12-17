@@ -64,3 +64,8 @@ type Result = ReturnType<Fn>;  // string
 ```
 `Parameters<T>` -- 获取函数类型T的参数类型**数组**
 
+
+
+## 经验
+`访问对象的key`----[k in keyof K]
+`访问数组的值` ----[val in A[number]]
