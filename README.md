@@ -38,6 +38,10 @@ type ReturnTypeOf<T> = T extends (...args: any[]) => R ? R : never;// 错！ R�
 
 type ElementType<T> = T extends (infer U)[] ? U : never;
 type ElementType<T> = T[number] // OK
+
+// infer 的最好例子： 实现TS内置的Parameters<T>类型
+type myParameters<T extends (...args)=>any> 
+= T extends (...any: S)=>any ? S : never
 ```
 
 
@@ -94,10 +98,20 @@ type Result = ReturnType<Fn>;  // string
 ### 数组/对象的遍历访问
 `访问对象的key`----[k in keyof K]
 `访问数组的值` ----[val in A[number]]
+```typescript
+type Includes<T extends readonly any[], U> =
+  { [P in T[number]]: true }[U] extends true ? true : false
+```
+
 
 ### 数组类型的空值判定。 extends、never
 ```typeScript
 T[number] extends [] ?
 T['length'] extends 0 ?
 T extends [] ?
+```
+
+### 数组类型也可以用拓展运算符
+```
+type Concat<T extends any[], U extends any[]> = [...T, ...U]
 ```
