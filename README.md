@@ -57,39 +57,44 @@ type B = {
 type C = A extends B ? true : false;
 ```
 
+`as`-- 在映射类型中用于重新映射键名称
+```typescript
+type MyOmit<T, K> = {
+  [t in keyof T as t extends K ? never : t]: T[t]
+}
+```
 
 
 ## 常见内置工具类型
-`Partial<T>` -- 将对象类型的所有属性设置为可选  `T|undefined`  
 
-`Required<T>` -- 将对象类型的所有属性设置为必填  
+`Partial<T>` -- 将**对象类型**的所有属性设置为可选  `T|undefined`  
 
-`Readonly<T>` -- 将对象类型的所有属性设置为只读  
+`Required<T>` -- 将**对象类型**的所有属性设置为必填  
+
+`Readonly<T>` -- 将**对象类型**的所有属性设置为只读  
+
+`Omit<T, K>` -- 从**对象类型**T中排除某些属性K后，返回新类型
+
+`Pick<T, K>` -- 从**对象类型**T中挑选属性K，返回新类型
+
+----------------
+
+
+`Exclude<T, U>` -- 从**联合类型**T中移除U类型  
+
+`Extract<T, U>` -- 从**联合类型**T中提取U类型  
+
+`NonNullable<T>` -- 从**联合类型**T中移除null和undefined类型  
+
+`ReturnType<T>` -- 获取**函数类型**T的返回值类型  
+
+`Parameters<T>` -- 获取**函数类型**T的参数类型数组
+
+-----------------
 
 `Record<K, V>` -- 创建一个类型，其中所有的属性的key为K类型，value为V类型  
-```typeScript
-type PersonMap = Record<string, Person>;
-const people: PersonMap = {
-    tom: { name: 'Tom', age: 25 },
-    jerry: { name: 'Jerry', age: 30 }
-};
-```
-`Exclude<T, U>` -- 从T类型中移除U类型  
-
-`Extract<T, U>` -- 从T类型中提取U类型  
-
-`NonNullable<T>` -- 从T类型中移除null和undefined类型  
-
-`ReturnType<T>` -- 获取函数类型T的返回值类型  
-
-`Omit<T, K>` -- 从T中排除某些属性K后，返回新类型
 
 
-```typeScript
-type Fn = (x: number) => string;
-type Result = ReturnType<Fn>;  // string
-```
-`Parameters<T>` -- 获取函数类型T的参数类型**数组**
 
   
 
@@ -104,7 +109,7 @@ type Includes<T extends readonly any[], U> =
 ```
 
 
-### 数组类型的空值判定。 extends、never
+### 数组类型的空值判定 extends、never
 ```typeScript
 T[number] extends [] ?
 T['length'] extends 0 ?
@@ -112,6 +117,11 @@ T extends [] ?
 ```
 
 ### 数组类型也可以用拓展运算符
-```
+```typeScript
 type Concat<T extends any[], U extends any[]> = [...T, ...U]
+```
+
+### not a object
+```typeScript
+type NotObject<T> = keyof T extends never ? true : false;
 ```
