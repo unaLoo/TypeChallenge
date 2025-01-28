@@ -1,5 +1,4 @@
-# TypeScript NoteBook
-
+# TypeScript NoteBook 
 
 ## 几个特殊类型
 `never`--表示永不发生的值，函数报错时就可以返回never类型
